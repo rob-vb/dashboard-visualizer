@@ -21,7 +21,7 @@ Standing decisions from the charting session (2026-08-18):
 - **Stack**: TypeScript, Next.js, Vercel, Convex (DB), Better Auth. Stripe access in MVP: pasted restricted read-only key; Stripe Connect is the later upgrade path. Art comes from existing asset packs.
 - **Ordering rule (user requirement)**: **frontend first.** All visuals run on a mock data generator before ANY backend work (Convex, auth, Stripe sync) starts.
 - **Skills to consult**: `mattpocock-skills:prototype` for prototype tickets; `frontend-design:frontend-design` for visual work; `mattpocock-skills:grilling` + `mattpocock-skills:domain-modeling` for decision tickets.
-- This repo is not a git repository; the local-markdown tracker in `.scratch/` is canonical. Research findings live under `.scratch/mvp-spec/research/`.
+- ~~This repo is not a git repository~~ — **the repo became git on 2026-08-24** (`rob-vb/dashboard-visualizer`, private, branch `main`). The local-markdown tracker in `.scratch/` stays canonical. Research findings live under `.scratch/mvp-spec/research/`.
 
 ## Decisions so far
 

@@ -39,8 +39,15 @@ Settle:
 3. **What the record keeps.** The pixel look was approved by the user on 2026-08-18 and
    then beaten. Screenshots and the ADR trail are cheap; the code is not. What is worth
    holding onto so the decision stays legible in a year?
-4. **Whether "delete" is even reversible here.** This repo is **not** a git repository —
+4. ~~**Whether "delete" is even reversible here.** This repo is **not** a git repository —
    the local-markdown tracker in `.scratch/` is canonical and there is no history to
-   recover a deleted directory from. Weigh that before choosing.
+   recover a deleted directory from. Weigh that before choosing.~~
+   **Void as of 2026-08-24** — the repo became git that day and is pushed to
+   `rob-vb/dashboard-visualizer` (private, branch `main`), with the whole 2D prototype
+   in the first commit. Deleting `prototypes/forest-world/` is now recoverable, so this
+   question is decided on what the *working tree* should hold, not on what is safe to
+   lose. That argues against "archive it in a folder called `archive/`": git is the
+   archive. What it does not settle is whether the pixel World survives as something
+   the product uses — that is Q1, and it is the real question.
 
 Consult `mattpocock-skills:grilling` and `mattpocock-skills:domain-modeling`.

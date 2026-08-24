@@ -1,3 +1,9 @@
+## Version control
+
+Git, on `main`, pushed to `rob-vb/dashboard-visualizer` (private). Added 2026-08-24 —
+tickets written before that date say the repo has no git and no way to recover a
+deleted file. That is no longer true.
+
 ## Agent skills
 
 ### Issue tracker
