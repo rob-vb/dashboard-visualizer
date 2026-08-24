@@ -64,7 +64,7 @@ const world3d = read('world3d.js')
 const main = read('main.js')
   .replace(/import \{[^}]*\} from '\.\/world3d\.js';/, '');
 
-const mockSignals = read('..', 'forest-world', 'mock-signals.js');
+const mockSignals = read('..', 'signals', 'mock-signals.js');
 const geometry = read('assets', 'geometry.json');
 
 // ---------- the page ----------
@@ -73,7 +73,7 @@ const html = read('index.html')
   .replace(/<!doctype html>[\s\S]*?<head>/i, '')
   .replace(/<\/head>[\s\S]*?<body>/i, '')
   .replace(/<\/body>\s*<\/html>\s*$/i, '')
-  .replace(/<script src="\.\.\/forest-world\/mock-signals\.js"><\/script>/, '')
+  .replace(/<script src="\.\.\/signals\/mock-signals\.js"><\/script>/, '')
   .replace(/<script type="module" src="\.\/main\.js"><\/script>/, '')
   // the hosted copy is named, not captioned; the ticket number lives in the description
   .replace(/<title>[^<]*<\/title>/, '<title>3D Forest World</title>');

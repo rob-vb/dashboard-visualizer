@@ -1,4 +1,4 @@
-/* PROTOTYPE test harness — run with: node prototypes/forest-world/test.mjs
+/* PROTOTYPE test harness — run with: node prototypes/signals/test.mjs
  *
  * Loads mock-signals.js (a file:// global-scope script) under a fake `window`,
  * then runs:

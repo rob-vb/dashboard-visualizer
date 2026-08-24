@@ -24,7 +24,7 @@ Risk Overlay, Subscriber, Size Tier, World, Entity, Theme.
 The canonical Signal set, tier rules and mock-generator contract:
 [ticket 04](issues/04-grilling-signal-set.md) **[veto]**. The shared
 `foldWorldState` and the deterministic placement rule are reference-implemented
-in the prototype (`prototypes/forest-world/mock-signals.js`) and are the
+in the prototype (`prototypes/signals/mock-signals.js`) and are the
 contract the production code re-implements 1:1 (with tests asserting parity).
 
 ## 3. The MVP is / is not

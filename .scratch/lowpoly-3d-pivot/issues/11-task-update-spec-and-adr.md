@@ -21,7 +21,7 @@ Do:
 3. **Rewrite [`docs/theme-definition-template.md`](../../../docs/theme-definition-template.md)** for 3D, from ticket 06's vocabulary. The current template is written for sprites.
 4. **Check `CONTEXT.md`.** **World** is defined as "the rendered isometric scene". If ticket 04 freed the camera, that word is now wrong — fix it, and check that **Entity**, **Size Tier** and **Theme** still read true.
 5. **Check ADR-0001, ADR-0002 and ADR-0003.** They should all survive untouched — that is the point of the Signal layer. If any one does not, say so loudly, because it means the pivot reached further than planned.
-6. **Close the map**: append the decisions to [`map.md`](../map.md), and decide the fate of `prototypes/forest-world/` (fog on the map).
+6. **Close the map**: append the decisions to [`map.md`](../map.md), and record the fate of the 2D prototype as [ticket 14](14-grilling-pixijs-fate.md) decided it: `prototypes/forest-world/` is deleted, the Signal layer lives on at `prototypes/signals/`.
 
 Consult `mattpocock-skills:domain-modeling` for the ADR and glossary work.
 
@@ -31,7 +31,7 @@ Consult `mattpocock-skills:domain-modeling` for the ADR and glossary work.
 
 > A churned Entity's **Size Tier** comes from `lastMrr`, carried forward through the fold's single pass — never from a rescan of the **Timeline** per churned **Subscriber**.
 
-The rescan cost 201.5 ms per fold at 1,583 Entities (5 fps); carrying `lastMrr` forward costs 0.75 ms. It is invisible at demo scale and fatal at customer scale, so the spec should state the rule rather than leave the port to rediscover it. Reference implementation: `prototypes/forest-world/mock-signals.js`, with `prototypes/forest-world/test.mjs` as the regression test.
+The rescan cost 201.5 ms per fold at 1,583 Entities (5 fps); carrying `lastMrr` forward costs 0.75 ms. It is invisible at demo scale and fatal at customer scale, so the spec should state the rule rather than leave the port to rediscover it. Reference implementation: `prototypes/signals/mock-signals.js`, with `prototypes/signals/test.mjs` as the regression test.
 
 **2026-08-24 — from [ticket 13](13-grilling-camera-redecided.md), the camera.** Three
 changes to the work above:
