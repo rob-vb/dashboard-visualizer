@@ -1,12 +1,11 @@
 /* PROTOTYPE — ticket 08. Zero-dependency static server for the repo root.
  *
  * The 3D prototype needs ES modules and fetch(), which file:// forbids.
- * Serving the repo root means the 2D fallback is reachable in the next tab,
- * which is the whole point of a gate:
+ * Serving the repo root also puts the Signal layer (prototypes/signals/) on the
+ * same origin, which is where the mock generator lives since ticket 14:
  *
  *   node prototypes/forest-world-3d/serve.mjs
  *   3D  http://localhost:5173/prototypes/forest-world-3d/
- *   2D  http://localhost:5173/prototypes/forest-world/
  */
 
 import { createServer } from 'node:http';
@@ -38,6 +37,5 @@ createServer(async (req, res) => {
 }).listen(PORT, '0.0.0.0', () => {
   const lan = Object.values(networkInterfaces()).flat().find((n) => n.family === 'IPv4' && !n.internal);
   console.log(`3D  http://localhost:${PORT}/prototypes/forest-world-3d/`);
-  console.log(`2D  http://localhost:${PORT}/prototypes/forest-world/`);
   if (lan) console.log(`phone  http://${lan.address}:${PORT}/prototypes/forest-world-3d/`);
 });

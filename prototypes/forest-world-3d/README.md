@@ -4,17 +4,18 @@
 World earn the same verdict the pixel-art Forest World got?* See
 `.scratch/lowpoly-3d-pivot/issues/08-prototype-3d-forest-gate.md`.
 
-`prototypes/forest-world/` (the PixiJS original) is the fallback and the thing
-being compared against. **Do not delete it.** Nothing here touches it — this
-prototype loads its `mock-signals.js` unchanged, which is the proof that the
-pivot is a Theme-layer change (ADR-0001).
+The gate passed on 2026-08-24, and ticket 14 then deleted `prototypes/forest-world/`
+(the PixiJS original). It lives only in git history, at commit `ed8b8a9`. The
+render-independent Signal layer it was built on survives at `prototypes/signals/`,
+and this prototype still loads that `mock-signals.js` unchanged — the proof that
+the pivot is a Theme-layer change (ADR-0001).
 
 ## Open the hosted copy
 
 Single-file bundle, published 2026-08-24 — works on a phone, no server needed:
 https://claude.ai/code/artifact/0fdf9d44-f1ff-49f2-ade5-be0300dd5e45
 
-The 2D original it is measured against:
+The 2D original it was measured against, kept as the gate's record:
 https://claude.ai/code/artifact/27f15c28-493b-4470-9186-3889ff59b8df
 
 Rebuild the bundle after any change:
@@ -30,7 +31,6 @@ node prototypes/forest-world-3d/serve.mjs
 ```
 
 - 3D — http://localhost:5173/prototypes/forest-world-3d/
-- 2D — http://localhost:5173/prototypes/forest-world/  ← open both, side by side
 - phone — the server prints a LAN URL; open it on a real phone and read the HUD
 
 A server is needed (unlike the 2D prototype): ES modules and `fetch` do not work
