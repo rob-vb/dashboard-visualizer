@@ -49,3 +49,25 @@ changes to the work above:
 - **§4 gains a camera section.** Take it from [ticket 13](13-grilling-camera-redecided.md)'s
   table, never from ticket 04's — ticket 04 is history now. §1's "isometric" is wrong
   for the same reason "pixel-art" is.
+
+## Update — a third ADR is owed (2026-08-24, from ticket 16)
+
+[Ticket 16](16-grilling-entity-animation.md) adds an ADR beside the render-stack and
+camera ones: **motion lives inside the instance write; no Entity and no Scenery uses
+a skeleton.** Hard to reverse (the renderer has no `SkinnedMesh` path and the asset
+choice follows from it), surprising without context (a reader will ask why a product
+with rigged packs available ships statues), and a real trade-off. It must carry:
+
+- The **ambient / transition** table — ambient motion carries no Signal and may be
+  switched off; transition motion is a tweened geometry swap and runs everywhere.
+- **Transition motion plays live and in replay, and hard-cuts on a scrub** (ticket 05's
+  rule, generalised to the class).
+- The reason ambient motion is desktop-only is **battery and the demand loop, never
+  performance** — written as performance it becomes the device-sniffing ladder
+  [ticket 15](15-task-measure-device-fps.md) banned.
+- **Stopped sway is redundancy, never a cue.** It may repeat what colour says and may
+  never be the only signal of churn.
+
+Also: **`CONTEXT.md` gained a `Scenery` entry** in ticket 16's session, so item 4's
+glossary check now covers it. And one build note for the prototype, not for the spec:
+`world3d.js:541`'s tier tween ignores `prefers-reduced-motion` and should hard-cut.

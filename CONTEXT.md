@@ -36,6 +36,10 @@ _Avoid_: scene, map, dashboard canvas, isometric view
 The visual object inside a World that represents exactly one subscriber — a tree in the forest, a building in the city.
 _Avoid_: sprite, avatar, unit
 
+**Scenery**:
+Everything inside a World that represents no Subscriber — grass, rocks, roads, street lights, townsfolk. Scenery reads no Signal and its amount never varies with the data.
+_Avoid_: prop, decoration, background, set dressing
+
 **Mourning Window**:
 The period after a Subscriber churns during which its Entity keeps a dramatic form, before it decays to a quiet residue form (forest: 90 days, then a stump). Every Theme must define one — without it an old business renders as a graveyard.
 _Avoid_: grace period (collides with Stripe's dunning grace period), decay time

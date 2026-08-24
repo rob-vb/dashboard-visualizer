@@ -64,3 +64,28 @@ One correction to carry: research 01 ranked **Quaternius Downtown City MegaKit**
 first for City without seeing it. Its preview is photoreal PBR, entirely the
 wrong art style. The same ranking may not be trustworthy for Ultimate Fantasy
 RTS either — look at the pack.
+
+## Update — ticket 16 is resolved; this ticket is unblocked (2026-08-24)
+
+[Ticket 16](16-grilling-entity-animation.md) settled motion for the whole map, and
+**point 1 above is void**. Its premise — "that pack won on its rigged units" — is
+not what [research 01](../research/01-lowpoly-sources.md) says. Ultimate Fantasy RTS
+is **128 static meshes**, "no parameters, same limitation as Kenney". The rigged
+figures are in *different* Quaternius packs, in styles the same research warns do
+not match. So authored geometry costs this Theme nothing in rigging, because
+nothing here was ever going to rig.
+
+What this ticket inherits, and must not re-open:
+
+- **The building is the Entity.** The pack's "buildings in different evolution
+  stages" are the Size Tier ladder — the reason it was ranked first.
+- **A soldier or villager is Scenery**, a term now in `CONTEXT.md`: it represents
+  no Subscriber and reads no Signal.
+- **No skeleton, anywhere.** Motion lives inside the instance write.
+- **Budget: Scenery costs at most ~10 draw calls**, a fixed cast that never scales
+  with the Subscriber count. This ticket chooses *what* the cast is.
+- **Ambient motion carries no Signal** and is desktop-only. **Transition motion** is
+  a tweened geometry swap — a Size Tier change, and the day-90 residue swap.
+- Point 2 above is partly spent: [ticket 15](15-task-measure-device-fps.md) has since
+  measured a real device (60 fps on an iPhone 16 at 3,167 Entities). The instruction
+  to measure this pack's triangles per Entity before trusting it still stands.
