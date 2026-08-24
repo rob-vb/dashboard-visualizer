@@ -35,3 +35,32 @@ Two consequences for this ticket:
 **Do first, before deciding:** download Ultimate Fantasy RTS and count the evolution stages per building. The stage count is not published, and this Theme's whole Size Tier story rests on it. Four stages maps to four **Size Tiers** exactly; three or five needs a mapping rule.
 
 Question 1 still stands on its merits: units being *available* is not a reason to add them. An **Entity** is one subscriber (ADR-0003), and a unit that walks around is not obviously the same idea as a building that grows.
+
+## Update — authoring is now on the table (2026-08-24, from ticket 09)
+
+[Ticket 09](09-grilling-city-theme-3d.md) decided the City is **not** bought from
+a kit: its geometry is generated in code, one storey / roof / ground floor, with
+a building built as a stack of storey instances. That redrew the map's
+"Making our own 3D models" scope line, so this ticket may no longer assume the
+answer is a zip.
+
+Read that before running this one. Three points bear directly on the RTS Theme:
+
+1. **It collides with why Quaternius Ultimate Fantasy RTS was chosen.** That
+   pack won on its **rigged units** — the gap neither pixel art nor Polyfork
+   could close. Authored geometry does not rig cheaply. See
+   [ticket 16](16-grilling-entity-animation.md), which blocks this ticket.
+2. **The measured cost argument.** Kenney's city buildings run 1,986 triangles
+   on average against the Forest's 150 — 13.3× — and no device frame rate has
+   been taken yet ([ticket 15](15-task-measure-device-fps.md)). Measure the
+   Quaternius pack before trusting it, the way ticket 09 measured Kenney and
+   caught it.
+3. **Per-Theme sourcing costs nothing.** Forest buys CC0, City authors. The RTS
+   Theme is free to pick either — research 01 established coherence is required
+   inside a Theme and is irrelevant across Themes. Do not treat one Theme's
+   choice as a precedent for this one.
+
+One correction to carry: research 01 ranked **Quaternius Downtown City MegaKit**
+first for City without seeing it. Its preview is photoreal PBR, entirely the
+wrong art style. The same ranking may not be trustworthy for Ultimate Fantasy
+RTS either — look at the pack.

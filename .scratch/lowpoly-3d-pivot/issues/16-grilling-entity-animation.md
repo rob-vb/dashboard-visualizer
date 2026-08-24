@@ -47,3 +47,16 @@ without knowing whether its units are rigs or statues. [Ticket 09](09-grilling-c
 should follow whatever this decides rather than deciding it again.
 
 Consult `mattpocock-skills:grilling` and `mattpocock-skills:domain-modeling`.
+
+## Update — the City has answered a piece of this (2026-08-24, from ticket 09)
+
+[Ticket 09](09-grilling-city-theme-3d.md) gave the City an ambient loop that is
+a **slow window-light twinkle on lit windows only** — a `setColorAt` brightness
+variation, one instance per storey. Desktop-only and off under
+`prefers-reduced-motion`, the same rule the Forest sway follows, and for the
+same reason: a permanently animating World defeats `frameloop="demand"`.
+
+So two Themes now animate **inside the instance write** and neither needs a rig.
+That sharpens this ticket rather than settling it: the open question is entirely
+about the RTS Theme's rigged units, since a skinned mesh is the one form that
+does not fit the instancing budget the whole World depends on.
