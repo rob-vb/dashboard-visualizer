@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PROTOTYPE — 3D Forest World (ticket 08, the gate)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* The product chrome below is copied verbatim from the 2D prototype.
+     The gate compares two Worlds; everything around the World is held still,
+     so a preference is a preference for the World and not for new styling.
+     The only new furniture is the dark instrument bar, which is deliberately
+     styled as an instrument. */
+  :root {
+    --ink: #2b2b26;
+    --cream: #f8f1dc;
+    --cream-dark: #eadfc2;
+    --moss: #3e8b50;
+    --pine: #2f6d3f;
+    --alert: #c2612f;
+    --night-a: #16202e;
+    --night-b: #24413a;
+    --px-font: 'Press Start 2P', monospace;
+    --body-font: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { font-family: var(--body-font); background: #28361f; color: var(--ink); overflow: hidden; }
+  #root { position: absolute; inset: 0; }
+
+  .box { background: var(--cream); border: 3px solid var(--ink); border-radius: 6px;
+         box-shadow: 3px 3px 0 rgba(20, 26, 14, 0.45); padding: 10px 12px; }
+  .label { font-family: var(--px-font); font-size: 8px; letter-spacing: .5px; color: #6d6753; text-transform: uppercase; }
+  .stat-big { font-family: var(--px-font); font-size: 18px; margin-top: 6px; color: var(--pine); }
+  .stat-small { font-family: var(--px-font); font-size: 10px; margin-top: 5px; }
+  .dot { display: inline-block; width: 8px; height: 8px; border: 1px solid var(--ink); margin-right: 6px; }
+  .dot.active { background: #3e8b50; } .dot.warning { background: #d1913c; }
+  .dot.critical { background: #c2612f; } .dot.churned { background: #7d6f5f; }
+
+  /* variant A */
+  .vA-canvas { position: absolute; inset: 0; }
+  .vA-hud { position: absolute; top: 16px; left: 16px; display: flex; flex-direction: column; gap: 10px; max-width: 260px; }
+  .vA-legend { position: absolute; right: 16px; bottom: 64px; font-size: 12px; line-height: 1.9; }
+
+  /* variant B */
+  .vB { position: absolute; inset: 0; display: grid; grid-template-rows: auto 1fr; background: var(--cream-dark); }
+  .vB-head { display: flex; gap: 14px; align-items: stretch; padding: 12px 14px 6px; flex-wrap: wrap; }
+  .vB-head .box { display: flex; flex-direction: column; justify-content: center; min-width: 130px; }
+  .vB-main { display: grid; grid-template-columns: 1fr 300px; gap: 14px; padding: 8px 14px 60px; min-height: 0; }
+  .vB-world { border: 3px solid var(--ink); border-radius: 6px; overflow: hidden; position: relative; box-shadow: 3px 3px 0 rgba(20,26,14,.35); }
+  .vB-mount { position: absolute; inset: 0; }
+  .vB-roster { overflow: hidden auto; display: flex; flex-direction: column; padding: 8px; position: relative; }
+  .vB-roster h2 { font-family: var(--px-font); font-size: 10px; padding: 4px 4px 10px; }
+  .vB-row { display: flex; align-items: center; gap: 8px; padding: 6px; font-size: 12px; border-bottom: 1px dashed #c9bd9d; cursor: pointer; }
+  .vB-row:hover, .vB-row.hot { background: #fff8e3; outline: 2px solid var(--ink); outline-offset: -2px; }
+  .vB-row .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .vB-row .mrr { font-family: var(--px-font); font-size: 8px; }
+  .tierpip { color: var(--pine); letter-spacing: -1px; font-size: 11px; width: 34px; }
+
+  /* variant S — the share link (a camera position, not a layout) */
+  .vC { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+        background: radial-gradient(ellipse at 50% 20%, var(--night-b) 0%, var(--night-a) 70%); }
+  .vC-title { text-align: center; color: var(--cream); }
+  .vC-title .label { color: #9db4a4; }
+  .vC-title .mrr { font-family: var(--px-font); font-size: 30px; margin-top: 12px; color: #ffe98a; text-shadow: 0 3px 0 rgba(0,0,0,.5); }
+  .vC-frame { width: min(78vw, 900px); height: min(56vh, 520px); border: 3px solid #0d1420; border-radius: 10px;
+              box-shadow: 0 18px 50px rgba(0,0,0,.55); overflow: hidden; position: relative; }
+  .vC-caption { color: #9db4a4; font-size: 12px; }
+  .vC-caption b { color: var(--cream); }
+
+  /* the two yaw buttons (ticket 04 Q10) */
+  .yaw { position: absolute; right: 14px; bottom: 14px; z-index: 30; display: flex; align-items: center; gap: 8px;
+         background: var(--cream); border: 3px solid var(--ink); border-radius: 999px; padding: 5px 10px;
+         box-shadow: 3px 3px 0 rgba(20,26,14,.45); }
+  .yaw button { font-size: 15px; line-height: 1; background: var(--pine); color: var(--cream); border: 2px solid var(--ink);
+                border-radius: 999px; width: 28px; height: 28px; cursor: pointer; }
+  .yaw button:active { transform: translate(1px,1px); }
+  .yaw .label { font-size: 7px; }
+  .vC .yaw { display: none; }
+  /* in the framed layout the timeline sits over the world's bottom edge */
+  .vB-world .yaw { top: 14px; bottom: auto; }
+
+  #tooltip { position: fixed; pointer-events: none; z-index: 60; display: none; min-width: 190px; font-size: 12px; line-height: 1.7; }
+  #tooltip .tt-name { font-family: var(--px-font); font-size: 9px; margin-bottom: 6px; }
+
+  #timeline { position: fixed; left: 50%; bottom: 56px; transform: translateX(-50%); z-index: 90;
+              display: flex; align-items: center; gap: 12px; padding: 8px 14px; }
+  #timeline button { font-family: var(--px-font); font-size: 10px; background: var(--pine); color: var(--cream);
+                     border: 2px solid var(--ink); border-radius: 4px; padding: 6px 8px; cursor: pointer;
+                     box-shadow: 2px 2px 0 rgba(20,26,14,.4); }
+  #timeline button:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgba(20,26,14,.4); }
+  #timeline input[type=range] { width: min(44vw, 460px); accent-color: var(--pine); }
+  #tl-date { font-family: var(--px-font); font-size: 9px; min-width: 108px; text-align: center; }
+  #tl-note { font-size: 10px; color: var(--alert); max-width: 130px; line-height: 1.4; display: none; }
+  #roster-veil { position: absolute; inset: 0; background: rgba(234,223,194,.82); display: none;
+                 align-items: center; justify-content: center; text-align: center;
+                 font-family: var(--px-font); font-size: 9px; line-height: 2; padding: 20px; }
+
+  /* ---------- instrumentation: not part of the design ---------- */
+  #switcher { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 100;
+              display: flex; align-items: center; gap: 8px; background: #101418; color: #e8e8e8;
+              border-radius: 999px; padding: 6px 10px; box-shadow: 0 4px 18px rgba(0,0,0,.5); font-size: 12px; }
+  #switcher button { background: #232a31; color: #e8e8e8; border: 0; border-radius: 999px; width: 26px; height: 26px; cursor: pointer; font-size: 13px; }
+  #switcher button:hover { background: #39434d; }
+  #switcher .vlabel { min-width: 150px; text-align: center; font-weight: 600; }
+  #switcher select, #switcher input { background: #232a31; color: #e8e8e8; border: 1px solid #39434d; border-radius: 6px; padding: 3px 6px; font-family: inherit; font-size: 11px; }
+  #switcher input { width: 84px; }
+  #switcher .sep { width: 1px; height: 18px; background: #39434d; }
+
+  #knobs { position: fixed; top: 10px; right: 10px; z-index: 100; width: 286px; background: #101418ee; color: #e8e8e8;
+           border-radius: 10px; box-shadow: 0 4px 18px rgba(0,0,0,.5); font-size: 11px; backdrop-filter: blur(4px); }
+  #knob-head { display: flex; align-items: center; gap: 8px; padding: 7px 10px; }
+  #knob-toggle { background: #232a31; color: #e8e8e8; border: 0; border-radius: 6px; padding: 3px 7px; cursor: pointer; font-family: inherit; }
+  #perf { font-variant-numeric: tabular-nums; font-size: 10px; color: #8ad6a0; padding: 0 10px 8px; line-height: 1.5; }
+  #knob-body { display: none; padding: 4px 10px 10px; max-height: 68vh; overflow: auto; }
+  #knobs.open #knob-body { display: block; }
+  .knob-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px; padding: 5px 0; border-top: 1px solid #232a31; }
+  .knob-row label { display: flex; flex-direction: column; }
+  .knob-row em { font-style: normal; color: #78838f; font-size: 9.5px; margin-top: 2px; }
+  .knob-row input[type=range] { width: 96px; accent-color: #8ad6a0; }
+  .knob-row output { display: inline-block; width: 34px; text-align: right; color: #8ad6a0; font-variant-numeric: tabular-nums; }
+  .seg button { background: #232a31; color: #98a2ad; border: 0; padding: 3px 7px; cursor: pointer; font-family: inherit; font-size: 11px; }
+  .seg button:first-child { border-radius: 6px 0 0 6px; }
+  .seg button:last-child { border-radius: 0 6px 6px 0; }
+  .seg button.on { background: #2f6d3f; color: #fff; }
+
+  @media (max-width: 720px) {
+    .vB-main { grid-template-columns: 1fr; }
+    .vB-roster { display: none; }
+    .vA-legend { display: none; }        /* the World has to win the small screen */
+    .yaw { bottom: 108px; }
+    #knobs { width: 200px; }
+    #switcher .vlabel { min-width: 90px; }
+    #timeline input[type=range] { width: 40vw; }
+  }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <div id="tooltip" class="box"></div>
+
+  <div id="timeline" class="box">
+    <button id="tl-play" title="Replay history (space)">▶</button>
+    <input id="tl-range" type="range">
+    <span id="tl-date"></span>
+    <button id="tl-today" title="Jump to today">Today</button>
+    <span id="tl-note">churn risk shows only at today</span>
+  </div>
+
+  <div id="knobs">
+    <div id="knob-head">
+      <strong style="flex:1">Gate knobs</strong>
+      <button id="knob-toggle">open</button>
+    </div>
+    <div id="perf">—</div>
+    <div id="knob-body"></div>
+  </div>
+
+  <div id="switcher">
+    <button id="prev" title="Previous variant (←)">←</button>
+    <span class="vlabel" id="vlabel"></span>
+    <button id="next" title="Next variant (→)">→</button>
+    <span class="sep"></span>
+    <select id="preset" title="Mock business preset"></select>
+    <input id="seed" title="Mock seed" spellcheck="false">
+  </div>
+
+  <script src="../forest-world/mock-signals.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

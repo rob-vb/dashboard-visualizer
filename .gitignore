@@ -1,0 +1,19 @@
+# secrets — the Stripe seed tool reads its key from tools/stripe-seed/.env
+.env
+.env.*
+!.env.example
+
+# dependencies (none committed today; the prototypes vendor their libs on purpose)
+node_modules/
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# logs
+*.log
+npm-debug.log*
